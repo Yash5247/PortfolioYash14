@@ -16,6 +16,16 @@ const Card = dynamic(
   () => import("@/components/components/CardSwapClient").then((m) => m.Card),
   { ssr: false }
 );
+const ElectricBorder = dynamic(
+  () => import("@/components/effects/ElectricBorderClient"),
+  { ssr: false }
+);
+
+const projectColors: Record<string, string> = {
+  "mrv-system": "#60a5fa",
+  "ai-chatbot": "#c084fc",
+  shortsos: "#7df9ff",
+};
 
 function getTechIcon(name: string) {
   const n = name.toLowerCase().replace(/\s+/g, "");
@@ -39,89 +49,113 @@ export function ProjectsShowcase() {
   const projects = portfolioData.projects;
 
   return (
-    <section id="projects" className="relative min-h-screen py-24">
+    <section id="projects" className="relative py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-16 text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight text-white drop-shadow-lg sm:text-5xl">
             Projects
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-white/60">
-            Production systems I&apos;ve built — hover to pause rotation, click a
-            card for details.
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
+            Production systems I&apos;ve built — hover to pause rotation.
           </p>
         </div>
 
-        <div className="projects-card-swap relative mx-auto min-h-[620px] max-w-4xl">
+        <div className="projects-card-swap relative mx-auto flex min-h-[560px] w-full max-w-lg items-center justify-center">
           <CardSwap
-            width={420}
-            height={480}
-            cardDistance={55}
-            verticalDistance={65}
+            width={400}
+            height={460}
+            cardDistance={50}
+            verticalDistance={55}
             delay={5000}
             pauseOnHover
-            skewAmount={6}
+            skewAmount={4}
             easing="elastic"
           >
             {projects.map((project) => {
               const cs = project.caseStudy;
+              const accent = projectColors[project.id] ?? "#7df9ff";
+
               return (
                 <Card
                   key={project.id}
-                  className="flex flex-col overflow-hidden p-0"
-                  style={{ width: 420, height: 480 }}
+                  className="project-swap-card overflow-hidden !border-0 !bg-transparent p-0"
+                  style={{ width: 400, height: 460 }}
                 >
-                  <div className="relative h-36 bg-gradient-to-br from-violet-900/40 to-black p-6">
-                    <p className="text-xs uppercase tracking-widest text-violet-300">
-                      {project.category}
-                    </p>
-                    <h3 className="mt-2 text-xl font-bold text-white">
-                      {project.title}
-                    </h3>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <p className="text-sm text-white/70">{project.tagline}</p>
-                    <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-white/50">
-                      {cs.problem}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tech.slice(0, 4).map((t) => {
-                        const tech = getTechIcon(t);
-                        return (
-                          <span
-                            key={t}
-                            className="flex items-center gap-1 rounded-full border border-white/15 px-2 py-0.5 text-[10px] text-white/80"
-                          >
-                            {tech && (
-                              <Image
-                                src={tech.icon}
-                                alt=""
-                                width={12}
-                                height={12}
-                                className="h-3 w-3 dark:invert"
-                                unoptimized
-                              />
-                            )}
-                            {t}
-                          </span>
-                        );
-                      })}
+                  <ElectricBorder
+                    color={accent}
+                    speed={1}
+                    chaos={0.08}
+                    borderRadius={16}
+                    style={{ borderRadius: 16, width: "100%", height: "100%" }}
+                  >
+                    <div className="glass-panel flex h-[460px] w-[400px] flex-col overflow-hidden">
+                      <div
+                        className="shrink-0 p-6"
+                        style={{
+                          background: `linear-gradient(135deg, ${accent}33 0%, rgba(0,0,0,0.85) 70%)`,
+                        }}
+                      >
+                        <p
+                          className="text-xs font-semibold uppercase tracking-widest"
+                          style={{ color: accent }}
+                        >
+                          {project.category}
+                        </p>
+                        <h3 className="mt-2 text-xl font-bold leading-snug text-white">
+                          {project.title}
+                        </h3>
+                      </div>
+
+                      <div className="flex flex-1 flex-col p-6">
+                        <p className="text-sm text-white/80">{project.tagline}</p>
+                        <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-white/60">
+                          {cs.problem}
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {project.tech.slice(0, 4).map((t) => {
+                            const tech = getTechIcon(t);
+                            return (
+                              <span
+                                key={t}
+                                className="flex items-center gap-1 rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] text-white/85"
+                              >
+                                {tech && (
+                                  <Image
+                                    src={tech.icon}
+                                    alt=""
+                                    width={12}
+                                    height={12}
+                                    className="h-3 w-3"
+                                    unoptimized
+                                  />
+                                )}
+                                {t}
+                              </span>
+                            );
+                          })}
+                        </div>
+                        <div className="mt-auto flex gap-2 pt-6">
+                          {isValidUrl(project.live) && (
+                            <Button size="sm" variant="secondary" asChild>
+                              <a
+                                href={project.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Live
+                                <ArrowUpRight className="ml-1 h-3 w-3" />
+                              </a>
+                            </Button>
+                          )}
+                          <Button size="sm" variant="outline" asChild>
+                            <Link href={`/case-studies/${project.caseStudySlug}`}>
+                              Case Study
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="mt-auto flex gap-2 pt-6">
-                      {isValidUrl(project.live) && (
-                        <Button size="sm" variant="secondary" asChild>
-                          <a href={project.live} target="_blank" rel="noopener noreferrer">
-                            Live
-                            <ArrowUpRight className="ml-1 h-3 w-3" />
-                          </a>
-                        </Button>
-                      )}
-                      <Button size="sm" variant="outline" asChild>
-                        <Link href={`/case-studies/${project.caseStudySlug}`}>
-                          Case Study
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
+                  </ElectricBorder>
                 </Card>
               );
             })}

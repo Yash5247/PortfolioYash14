@@ -21,7 +21,7 @@ export function LanyardSection() {
         <Lanyard
           position={[0, 0, 20]}
           gravity={[0, -40, 0]}
-          frontImage="/profile.png"
+          frontImage="/badge.png"
           imageFit="cover"
           transparent
         />

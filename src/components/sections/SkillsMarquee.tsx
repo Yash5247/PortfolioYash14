@@ -55,7 +55,7 @@ export function SkillsMarquee() {
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(portfolioData.tools).map(([category, items]) => (
-            <div key={category} className="rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-sm">
+            <div key={category} className="glass-panel rounded-2xl p-6">
               <h3 className="mb-4 text-lg font-semibold text-white">{category}</h3>
               <div className="flex flex-wrap gap-2">
                 {items.map((item) => (

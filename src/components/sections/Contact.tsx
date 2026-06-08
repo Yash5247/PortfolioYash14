@@ -43,9 +43,9 @@ export function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-1 shadow-2xl backdrop-blur-xl"
+            className="glass-panel overflow-hidden rounded-2xl p-1"
           >
-            <div className="rounded-xl border border-white/5 bg-background/60 p-6 sm:p-8">
+            <div className="rounded-xl p-6 sm:p-8">
               {submitted ? (
                 <div className="flex min-h-[280px] flex-col items-center justify-center text-center">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10">

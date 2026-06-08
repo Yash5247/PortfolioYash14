@@ -41,7 +41,7 @@ export function Typewriter({ phrases, className }: TypewriterProps) {
   return (
     <span className={className}>
       {text}
-      <span className="animate-pulse">|</span>
+      <span className="ml-0.5 inline-block w-[2px] animate-pulse bg-violet-400 align-middle" style={{ height: "1em" }} />
     </span>
   );
 }

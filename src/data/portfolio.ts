@@ -183,10 +183,10 @@ export const portfolioData: PortfolioData = {
     phone: "+91 8824141454",
     location: "Jaipur, Rajasthan, India",
     typewriterPhrases: [
-      "Building Production Software",
-      "Designing Automation Systems",
-      "Shipping Full Stack Products",
-      "Engineering AI Workflows",
+      "Full Stack Developer",
+      "Software Developer",
+      "AI Automation Builder",
+      "Backend Engineer",
     ],
     summary:
       "Computer Science undergraduate who builds real software systems — full-stack applications, AI automation pipelines, and production dashboards. Co-founder of Pramana15, where I design and ship products end-to-end: frontend interfaces, backend APIs, database architecture, and deployment.",
