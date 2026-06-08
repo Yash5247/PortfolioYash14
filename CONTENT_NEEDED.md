@@ -6,7 +6,7 @@ Everything below is **not linked** in the site yet because you haven't provided 
 
 | Item | Where to add | Notes |
 |------|--------------|-------|
-| **Resume PDF** | `public/resume.pdf` | Download button in Hero points here |
+| **Resume PDF** | `public/resume.pdf` | ✅ Added |
 | **Deployed portfolio URL** | `site.url` in `portfolio.ts` | Add after Vercel deploy (e.g. `https://your-name.vercel.app`) |
 | **Project GitHub repos** | `projects[].github` | One URL per project when repos are public |
 | **Project screenshots** | Replace placeholders in case study pages | Add images to `public/projects/` and wire in case study component |

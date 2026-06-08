@@ -1,9 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { portfolioData } from "@/data/portfolio";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import { SystemNetworkGraph } from "@/components/effects/SystemNetworkGraph";
+import { PlexusField } from "@/components/effects/PlexusField";
+
+const FluidGlass = dynamic(() => import("@/components/effects/FluidGlass"), {
+  ssr: false,
+});
 
 const { nodes, description } = portfolioData.systemArchitecture;
 
@@ -21,15 +26,24 @@ export function SystemArchitecture() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-muted/10"
+          className="relative overflow-hidden rounded-2xl border border-border bg-violet-950/20"
         >
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/60" />
-          <SystemNetworkGraph
-            className="h-[420px] w-full sm:h-[480px]"
-            interactive
-          />
+          <FluidGlass
+            className="h-[480px] w-full"
+            mode="cube"
+            cubeProps={{
+              scale: 0.18,
+              ior: 1.2,
+              thickness: 3,
+              chromaticAberration: 0.12,
+              transmission: 1,
+              roughness: 0,
+            }}
+          >
+            <PlexusField />
+          </FluidGlass>
 
-          <div className="border-t border-border bg-background/80 px-6 py-5 backdrop-blur-sm">
+          <div className="border-t border-border bg-background/90 px-6 py-5 backdrop-blur-md">
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {nodes.map((node) => (
                 <div key={node.id} className="flex items-center gap-2">
@@ -44,8 +58,8 @@ export function SystemArchitecture() {
               ))}
             </div>
             <p className="mt-3 text-center text-xs text-muted-foreground/70">
-              Animated data flow between layers — the architecture behind every
-              product I build
+              Drag the glass cube · Data flows through the plexus network behind
+              it
             </p>
           </div>
         </motion.div>

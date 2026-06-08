@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -18,9 +19,16 @@ import { Badge } from "@/components/ui/badge";
 
 const experience = portfolioData.experience;
 
+const ExperienceCube = dynamic(
+  () =>
+    import("@/components/effects/ExperienceCube").then((m) => m.ExperienceCube),
+  { ssr: false }
+);
+
 export function Experience() {
   const [activeId, setActiveId] = useState(experience[0].id);
   const active = experience.find((e) => e.id === activeId) ?? experience[0];
+  const activeIndex = experience.findIndex((e) => e.id === activeId);
 
   return (
     <section id="experience" className="px-6 py-28">
@@ -30,6 +38,14 @@ export function Experience() {
           title="Experience"
           description="Detailed breakdown of roles, systems built, and engineering decisions — not bullet-point summaries."
         />
+
+        <div className="mb-12 flex justify-center">
+          <ExperienceCube
+            experiences={experience}
+            activeIndex={activeIndex}
+            className="h-[280px] w-full max-w-md"
+          />
+        </div>
 
         <div className="grid gap-12 lg:grid-cols-[300px_1fr]">
           <ExperienceTimeline

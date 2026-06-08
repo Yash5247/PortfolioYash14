@@ -1,12 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowDown, Download, ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 import { Typewriter } from "@/components/shared/Typewriter";
 import { MagneticButton } from "@/components/shared/MagneticButton";
-import { SystemNetworkGraph } from "@/components/effects/SystemNetworkGraph";
 import { Button } from "@/components/ui/button";
+
+const SceneBackground = dynamic(
+  () =>
+    import("@/components/effects/SceneBackground").then((m) => m.SceneBackground),
+  { ssr: false }
+);
 
 const { personal, resume } = portfolioData;
 
@@ -14,12 +20,9 @@ export function Hero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24">
       <div className="pointer-events-none absolute inset-0">
-        <SystemNetworkGraph
-          className="h-full w-full opacity-60 dark:opacity-40"
-          interactive
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/80 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+        <SceneBackground className="h-full w-full" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/75 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl">
