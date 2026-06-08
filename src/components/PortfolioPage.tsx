@@ -9,9 +9,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { Button } from "@/components/ui/button";
 import { portfolioData } from "@/data/portfolio";
 import { HYPERSPEED_OPTIONS } from "@/lib/hyperspeed-options";
-import { techMarqueeLogos } from "@/lib/tech-marquee-logos";
 import Hyperspeed from "@/components/effects/HyperspeedClient";
-import LogoLoop from "@/components/effects/LogoLoopClient";
 import { SkillsMarquee } from "@/components/sections/SkillsMarquee";
 import { ExperienceCards } from "@/components/sections/ExperienceCards";
 import { ProjectsShowcase } from "@/components/sections/ProjectsShowcase";
@@ -84,23 +82,23 @@ export function PortfolioPage() {
             </ScrollReveal>
           </section>
 
-          {/* Tech marquee above About */}
-          <section className="relative py-8">
+          {/* Quick highlights */}
+          <section className="relative py-6">
             <ScrollReveal>
-              <div className="mx-auto max-w-5xl px-6">
-                <div className="readable-card rounded-xl py-5">
-                  <LogoLoop
-                    logos={techMarqueeLogos}
-                    speed={50}
-                    direction="left"
-                    logoHeight={32}
-                    gap={40}
-                    hoverSpeed={0}
-                    fadeOut
-                    fadeOutColor="rgba(8,8,10,0.98)"
-                    ariaLabel="Technologies"
-                  />
-                </div>
+              <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-3 px-6">
+                {[
+                  `${portfolioData.projects.length}+ Projects`,
+                  "Full Stack Developer",
+                  "B.Tech CSE",
+                  personal.location.split(",")[0],
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/12 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/80"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </ScrollReveal>
           </section>
