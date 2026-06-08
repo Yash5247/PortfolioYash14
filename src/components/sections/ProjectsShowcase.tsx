@@ -9,6 +9,9 @@ import { techEcosystem } from "@/lib/tech-ecosystem";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 
+const CARD_W = 380;
+const CARD_H = 440;
+
 const CardSwap = dynamic(
   () => import("@/components/components/CardSwapClient").then((m) => m.default),
   { ssr: false }
@@ -59,16 +62,20 @@ export function ProjectsShowcase() {
           description="Production systems I've built — hover to pause the card rotation."
         />
 
-        <div className="projects-card-swap relative mx-auto flex min-h-[560px] w-full max-w-lg items-center justify-center">
+        <div
+          className="projects-card-swap relative mx-auto flex items-center justify-center overflow-hidden"
+          style={{ width: CARD_W + 80, height: CARD_H + 100, maxWidth: "100%" }}
+        >
           <CardSwap
-            width={400}
-            height={460}
-            cardDistance={50}
-            verticalDistance={55}
+            className="card-swap-centered"
+            width={CARD_W}
+            height={CARD_H}
+            cardDistance={42}
+            verticalDistance={48}
             delay={5000}
             pauseOnHover
-            skewAmount={4}
-            easing="elastic"
+            skewAmount={3}
+            easing="linear"
           >
             {projects.map((project) => {
               const cs = project.caseStudy;
@@ -77,12 +84,11 @@ export function ProjectsShowcase() {
               return (
                 <Card
                   key={project.id}
-                  className="project-swap-card overflow-hidden !border-0 !bg-transparent p-0"
-                  style={{ width: 400, height: 460 }}
+                  className="project-swap-card !border-0 !bg-transparent p-0"
                 >
-                  <div className="readable-card flex h-[460px] w-[400px] flex-col overflow-hidden rounded-xl">
+                  <div className="readable-card flex h-full w-full flex-col overflow-hidden rounded-xl">
                     <div
-                      className="shrink-0 px-6 py-5"
+                      className="shrink-0 px-5 py-4"
                       style={{
                         background: `linear-gradient(135deg, ${accent}40 0%, rgba(4,4,8,0.95) 65%)`,
                       }}
@@ -93,26 +99,26 @@ export function ProjectsShowcase() {
                       >
                         {categoryLabels[project.category] ?? project.category}
                       </p>
-                      <h3 className="mt-2 text-xl font-bold leading-snug text-white text-shadow-sm">
+                      <h3 className="mt-2 text-lg font-bold leading-snug text-white text-shadow-sm">
                         {project.title}
                       </h3>
                     </div>
 
-                    <div className="flex flex-1 flex-col px-6 py-5">
+                    <div className="flex flex-1 flex-col px-5 py-4">
                       <p className="text-sm font-medium leading-relaxed text-white/90">
                         {project.tagline}
                       </p>
-                      <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-white/75">
+                      <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-white/75">
                         {cs.problem}
                       </p>
 
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="mt-3 flex flex-wrap gap-1.5">
                         {project.tech.slice(0, 4).map((t) => {
                           const tech = getTechIcon(t);
                           return (
                             <span
                               key={t}
-                              className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/10 px-2 py-1 text-[11px] font-medium text-white/90"
+                              className="inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/90"
                             >
                               {tech && (
                                 <Image
@@ -130,7 +136,7 @@ export function ProjectsShowcase() {
                         })}
                       </div>
 
-                      <div className="mt-auto flex gap-2 pt-6">
+                      <div className="mt-auto flex gap-2 pt-4">
                         {isValidUrl(project.live) && (
                           <Button
                             size="sm"

@@ -38,6 +38,7 @@ const CardSwap = ({
   onCardClick,
   skewAmount = 6,
   easing = 'elastic',
+  className = '',
   children
 }) => {
   const config =
@@ -74,18 +75,30 @@ const CardSwap = ({
 
   useEffect(() => {
     const total = refs.length;
-    refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
+    const dropDistance = Math.round(height * 0.55);
+
+    const resetAll = () => {
+      order.current.forEach((idx, i) => {
+        if (refs[idx]?.current) {
+          placeNow(refs[idx].current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount);
+        }
+      });
+    };
+
+    resetAll();
 
     const swap = () => {
       if (order.current.length < 2) return;
 
       const [front, ...rest] = order.current;
       const elFront = refs[front].current;
+      if (!elFront) return;
+
       const tl = gsap.timeline();
       tlRef.current = tl;
 
       tl.to(elFront, {
-        y: '+=500',
+        y: dropDistance,
         duration: config.durDrop,
         ease: config.ease
       });
@@ -144,7 +157,11 @@ const CardSwap = ({
         clearInterval(intervalRef.current);
       };
       const resume = () => {
-        tlRef.current?.play();
+        if (tlRef.current?.isActive()) {
+          tlRef.current.play();
+        } else {
+          resetAll();
+        }
         intervalRef.current = window.setInterval(swap, delay);
       };
       node.addEventListener('mouseenter', pause);
@@ -174,7 +191,11 @@ const CardSwap = ({
   );
 
   return (
-    <div ref={container} className="card-swap-container" style={{ width, height }}>
+    <div
+      ref={container}
+      className={`card-swap-container ${className}`.trim()}
+      style={{ width, height }}
+    >
       {rendered}
     </div>
   );
