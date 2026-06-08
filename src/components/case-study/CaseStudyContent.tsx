@@ -5,7 +5,6 @@ import type { PortfolioProject } from "@/data/portfolio";
 import { isValidUrl } from "@/data/portfolio";
 import { ArchitectureDiagram } from "@/components/visuals/ArchitectureDiagram";
 import { FlowDiagram } from "@/components/visuals/FlowDiagram";
-import { ScreenshotPlaceholder } from "@/components/visuals/ScreenshotPlaceholder";
 import { GitHubIcon } from "@/components/icons/brand-icons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -127,13 +126,6 @@ export function CaseStudyContent({ project }: CaseStudyContentProps) {
                 </p>
               </div>
             ))}
-          </div>
-        </Section>
-
-        <Section title="Screenshots">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <ScreenshotPlaceholder label={`${project.title} — Dashboard`} />
-            <ScreenshotPlaceholder label={`${project.title} — Workflow`} />
           </div>
         </Section>
 

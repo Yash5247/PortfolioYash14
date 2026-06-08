@@ -7,7 +7,6 @@ import { ArrowUpRight } from "lucide-react";
 import { portfolioData, isValidUrl } from "@/data/portfolio";
 import { techEcosystem } from "@/lib/tech-ecosystem";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Button } from "@/components/ui/button";
 
 const CARD_W = 380;
 const CARD_H = 440;
@@ -136,34 +135,35 @@ export function ProjectsShowcase() {
                         })}
                       </div>
 
-                      <div className="mt-auto flex gap-2 pt-4">
+                      <div className="mt-auto space-y-3 pt-4">
                         {isValidUrl(project.live) && (
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            className="bg-white/15 text-white hover:bg-white/25"
-                            asChild
+                          <a
+                            href={project.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex w-full items-center justify-between gap-2 rounded-lg border px-4 py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
+                            style={{
+                              borderColor: `${accent}80`,
+                              background: `linear-gradient(135deg, ${accent}55 0%, rgba(4,4,8,0.9) 100%)`,
+                              boxShadow: `0 0 20px ${accent}30`,
+                            }}
                           >
-                            <a
-                              href={project.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Live
-                              <ArrowUpRight className="ml-1 h-3 w-3" />
-                            </a>
-                          </Button>
+                            <span className="truncate">
+                              Visit Live Site
+                            </span>
+                            <ArrowUpRight
+                              className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                              style={{ color: accent }}
+                            />
+                          </a>
                         )}
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="border-white/20 text-white hover:bg-white/10"
-                          asChild
+                        <Link
+                          href={`/case-studies/${project.caseStudySlug}`}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
                         >
-                          <Link href={`/case-studies/${project.caseStudySlug}`}>
-                            Case Study
-                          </Link>
-                        </Button>
+                          Read case study
+                          <ArrowUpRight className="h-3 w-3" />
+                        </Link>
                       </div>
                     </div>
                   </div>

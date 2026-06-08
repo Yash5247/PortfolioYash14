@@ -75,73 +75,15 @@ export interface PortfolioProject {
   caseStudy: ProjectCaseStudy;
 }
 
-export interface SystemBuilt {
-  name: string;
-  description: string;
-}
-
 export interface DetailedExperience {
   id: string;
   company: string;
   role: string;
   period: string;
   summary: string;
-  challenges: string[];
   responsibilities: string[];
   techStack: string[];
   impact: string[];
-  systemsBuilt: SystemBuilt[];
-  processFlow: FlowStep[];
-}
-
-export interface FounderProduct {
-  name: string;
-  description: string;
-  url: string;
-}
-
-export interface FounderStory {
-  headline: string;
-  origin: string;
-  problems: string[];
-  products: FounderProduct[];
-  technicalChallenges: string[];
-  growth: string[];
-  vision: string;
-  milestones: FlowStep[];
-}
-
-export interface ArchitectureNode {
-  id: string;
-  label: string;
-  x: number;
-  y: number;
-  z: number;
-  color: string;
-}
-
-export interface ArchitectureEdge {
-  from: string;
-  to: string;
-}
-
-export interface SystemArchitectureConfig {
-  description: string;
-  nodes: ArchitectureNode[];
-  edges: ArchitectureEdge[];
-}
-
-export interface EngineeringPhase {
-  phase: string;
-  title: string;
-  description: string;
-  practices: string[];
-}
-
-export interface Certification {
-  title: string;
-  issuer: string;
-  year: string;
 }
 
 export interface NavLink {
@@ -156,12 +98,7 @@ export interface PortfolioData {
   projects: PortfolioProject[];
   tools: Record<string, string[]>;
   experience: DetailedExperience[];
-  founder: FounderStory;
-  engineering: EngineeringPhase[];
-  certifications: Certification[];
   navLinks: NavLink[];
-  marqueeItems: string[];
-  systemArchitecture: SystemArchitectureConfig;
   site: {
     url: string;
     description: string;
@@ -536,12 +473,6 @@ export const portfolioData: PortfolioData = {
       period: "2024 — Present",
       summary:
         "Co-founded Pramana15 and built the technical foundation for multiple production products — from AI chatbot automation to content pipelines and full-stack dashboards.",
-      challenges: [
-        "Shipping multiple products with a small team and limited resources.",
-        "Designing database schemas that support evolving automation requirements.",
-        "Balancing rapid iteration with maintainable backend architecture.",
-        "Integrating OpenAI APIs reliably into production user flows.",
-      ],
       responsibilities: [
         "Lead full-stack development across frontend, backend, and database layers.",
         "Architect REST APIs and integration points between services.",
@@ -563,41 +494,6 @@ export const portfolioData: PortfolioData = {
         "Established reusable API patterns across Pramana15 product suite.",
         "Built end-to-end systems from database design through production deployment.",
       ],
-      systemsBuilt: [
-        {
-          name: "Lead Automation System",
-          description:
-            "AI chatbot with OpenAI integration, lead extraction, and Supabase routing.",
-        },
-        {
-          name: "Content Automation (ShortsOS)",
-          description:
-            "Prompt pipelines and publishing workflows for short-form content generation.",
-        },
-        {
-          name: "MRV Platform",
-          description:
-            "Monitoring, reporting, and verification dashboards with traceable record management.",
-        },
-        {
-          name: "Admin Dashboards",
-          description:
-            "Internal interfaces for monitoring automation state, leads, and content pipelines.",
-        },
-        {
-          name: "API Integrations",
-          description:
-            "REST endpoints connecting frontend applications to backend services and databases.",
-        },
-      ],
-      processFlow: [
-        { label: "Requirements", description: "Define product scope and user flows" },
-        { label: "System Design", description: "Schema, API contracts, architecture" },
-        { label: "Build", description: "Frontend + backend implementation" },
-        { label: "Integrate AI", description: "Prompt engineering and API wiring" },
-        { label: "Deploy", description: "Production release on Vercel" },
-        { label: "Iterate", description: "User feedback drives refinements" },
-      ],
     },
     {
       id: "tata-power",
@@ -606,12 +502,6 @@ export const portfolioData: PortfolioData = {
       period: "2024",
       summary:
         "Worked on operational data systems for transformer fault identification, record processing, and consumer impact analysis — building backend logic and validation workflows for field operations data.",
-      challenges: [
-        "Processing large volumes of operational records with inconsistent formats.",
-        "Mapping transformer faults to consumer impact across geographic regions.",
-        "Building validation workflows that catch errors before they affect downstream analysis.",
-        "Translating domain requirements from operations teams into working software logic.",
-      ],
       responsibilities: [
         "Developed backend logic for operational record ingestion and processing.",
         "Built data validation workflows to ensure record integrity.",
@@ -631,35 +521,6 @@ export const portfolioData: PortfolioData = {
         "Enabled structured fault-to-consumer impact mapping for operations teams.",
         "Reduced manual data cleanup through automated validation workflows.",
       ],
-      systemsBuilt: [
-        {
-          name: "Fault Identification Pipeline",
-          description:
-            "Backend logic processing transformer fault data and classifying operational incidents.",
-        },
-        {
-          name: "Record Processing System",
-          description:
-            "Workflows ingesting, cleaning, and structuring large operational datasets.",
-        },
-        {
-          name: "Consumer Impact Mapping",
-          description:
-            "Logic connecting fault events to affected consumer regions and impact scope.",
-        },
-        {
-          name: "Data Validation Workflows",
-          description:
-            "Multi-step validation catching format errors, missing fields, and inconsistencies.",
-        },
-      ],
-      processFlow: [
-        { label: "Raw Data Ingestion", description: "Field records enter system" },
-        { label: "Validation", description: "Format and integrity checks" },
-        { label: "Fault Analysis", description: "Identification logic runs" },
-        { label: "Impact Mapping", description: "Consumer regions calculated" },
-        { label: "Review Output", description: "Operations team validates results" },
-      ],
     },
     {
       id: "oshvik",
@@ -668,12 +529,6 @@ export const portfolioData: PortfolioData = {
       period: "2024",
       summary:
         "Built responsive web interfaces with component-based architecture, focusing on cross-device compatibility, frontend performance, and reusable UI patterns.",
-      challenges: [
-        "Ensuring consistent UI behavior across browsers and screen sizes.",
-        "Building reusable components without over-abstracting early.",
-        "Optimizing frontend performance on content-heavy pages.",
-        "Maintaining design consistency across multiple page templates.",
-      ],
       responsibilities: [
         "Developed responsive web pages using modern frontend practices.",
         "Built reusable UI components with clear prop interfaces.",
@@ -693,199 +548,6 @@ export const portfolioData: PortfolioData = {
         "Established reusable component patterns used across multiple pages.",
         "Improved page performance through targeted frontend optimizations.",
       ],
-      systemsBuilt: [
-        {
-          name: "Component Library",
-          description:
-            "Reusable UI components — navigation, cards, forms — shared across pages.",
-        },
-        {
-          name: "Responsive Layouts",
-          description:
-            "Mobile-first page structures adapting cleanly to tablet and desktop.",
-        },
-        {
-          name: "Performance Optimizations",
-          description:
-            "Asset loading, lazy rendering, and CSS optimizations for faster pages.",
-        },
-      ],
-      processFlow: [
-        { label: "Design Review", description: "Analyze layout requirements" },
-        { label: "Component Build", description: "Create reusable UI blocks" },
-        { label: "Page Assembly", description: "Compose pages from components" },
-        { label: "Responsive Test", description: "Verify across breakpoints" },
-        { label: "Performance Pass", description: "Optimize and ship" },
-      ],
-    },
-  ],
-
-  founder: {
-    headline: "Building Pramana15",
-    origin:
-      "Pramana15 started from a practical observation: small teams and businesses need production-grade software and automation, but often lack the engineering capacity to build it. I co-founded Pramana15 to solve that — building real products that combine full-stack development with AI-powered automation.",
-    problems: [
-      "Businesses lose leads because follow-up is manual and slow.",
-      "Content creation at scale requires repetitive, disconnected tooling.",
-      "Operational data lacks structure, validation, and traceability.",
-      "Small teams need full-stack products without enterprise budgets.",
-    ],
-    products: [
-      {
-        name: "Lead Automation Platform",
-        description:
-          "AI chatbot with OpenAI integration, lead extraction, and Supabase routing — handling inbound conversations and structuring lead data automatically.",
-        url: "https://automation.pramana15.com/",
-      },
-      {
-        name: "ShortsOS",
-        description:
-          "Content generation and publishing automation for short-form media — prompt pipelines, AI-assisted drafting, and workflow orchestration.",
-        url: "https://pramana15.com",
-      },
-      {
-        name: "MRV System",
-        description:
-          "Monitoring, reporting, and verification platform for traceable record management across stakeholders.",
-        url: "https://oceara-web-platform-1.vercel.app/",
-      },
-    ],
-    technicalChallenges: [
-      "Designing database schemas flexible enough for multiple product lines.",
-      "Making OpenAI integrations reliable enough for production user flows.",
-      "Shipping fast without accumulating unmanageable technical debt.",
-      "Building automation that non-technical users can operate confidently.",
-    ],
-    growth: [
-      "Started with a single automation prototype and iterated based on real usage.",
-      "Expanded from one product to a suite of interconnected tools.",
-      "Established consistent API and deployment patterns across products.",
-      "Learned to scope features around actual user workflows, not assumptions.",
-    ],
-    vision:
-      "Build Pramana15 into a product studio that ships practical software — automation tools, dashboards, and AI systems that solve real operational problems for teams that need engineering without hiring a full department.",
-    milestones: [
-      { label: "Idea", description: "Identified automation gaps in lead and content workflows" },
-      { label: "First Product", description: "Shipped AI chatbot and lead automation system" },
-      { label: "Expansion", description: "Built MRV platform and ShortsOS content pipeline" },
-      { label: "Today", description: "Iterating on live products with real user feedback" },
-    ],
-  },
-
-  engineering: [
-    {
-      phase: "01",
-      title: "Planning",
-      description:
-        "Define the problem clearly. Map user flows, identify constraints, and decide what to build versus what to defer.",
-      practices: [
-        "User flow mapping",
-        "Scope definition",
-        "Constraint analysis",
-        "Priority ranking",
-      ],
-    },
-    {
-      phase: "02",
-      title: "System Design",
-      description:
-        "Design the architecture before writing code — API contracts, database schema, and service boundaries.",
-      practices: [
-        "API contract design",
-        "Database schema planning",
-        "Component architecture",
-        "Integration mapping",
-      ],
-    },
-    {
-      phase: "03",
-      title: "Frontend Development",
-      description:
-        "Build interfaces that are responsive, accessible, and aligned with the user flows defined in planning.",
-      practices: [
-        "Component-driven development",
-        "Responsive layouts",
-        "State management",
-        "Performance optimization",
-      ],
-    },
-    {
-      phase: "04",
-      title: "Backend Development",
-      description:
-        "Implement APIs, business logic, and service layers with clear error handling and validation.",
-      practices: [
-        "REST API design",
-        "Input validation",
-        "Error handling",
-        "Service orchestration",
-      ],
-    },
-    {
-      phase: "05",
-      title: "Database Design",
-      description:
-        "Structure data for integrity, query performance, and the relationships the product actually needs.",
-      practices: [
-        "Schema normalization",
-        "Relationship modeling",
-        "Migration planning",
-        "Data validation rules",
-      ],
-    },
-    {
-      phase: "06",
-      title: "Testing",
-      description:
-        "Verify critical paths work — API endpoints, validation logic, and user flows that matter most.",
-      practices: [
-        "API endpoint testing",
-        "Validation verification",
-        "Cross-browser checks",
-        "Edge case review",
-      ],
-    },
-    {
-      phase: "07",
-      title: "Deployment",
-      description:
-        "Ship to production with environment configuration, build verification, and release checks.",
-      practices: [
-        "Environment configuration",
-        "Build verification",
-        "Production release",
-        "Post-deploy smoke tests",
-      ],
-    },
-    {
-      phase: "08",
-      title: "Iteration",
-      description:
-        "Use real usage to refine — fix what breaks, improve what users struggle with, cut what nobody uses.",
-      practices: [
-        "User feedback loops",
-        "Performance monitoring",
-        "Feature refinement",
-        "Technical debt management",
-      ],
-    },
-  ],
-
-  certifications: [
-    {
-      title: "NPTEL Elite Rank Holder",
-      issuer: "NPTEL · IIT",
-      year: "2024",
-    },
-    {
-      title: "Full Stack Development",
-      issuer: "Industry Certification",
-      year: "2024",
-    },
-    {
-      title: "DevOps Certification",
-      issuer: "Industry Certification",
-      year: "2024",
     },
   ],
 
@@ -895,40 +557,6 @@ export const portfolioData: PortfolioData = {
     { label: "Work Experience", href: "#experience" },
     { label: "Projects", href: "#projects" },
     { label: "Contact", href: "#contact" },
-  ],
-
-  systemArchitecture: {
-    description:
-      "Every product I build follows the same core pattern — a React frontend talking to a Node.js API layer, persisting data in Supabase, with OpenAI powering automation where needed.",
-    nodes: [
-      { id: "client", label: "Client / User", x: -4.2, y: 0, z: 0, color: "#6366f1" },
-      { id: "frontend", label: "React Frontend", x: -2, y: 1.4, z: 0.5, color: "#818cf8" },
-      { id: "api", label: "Node.js API", x: 0.2, y: 0, z: 0, color: "#a5b4fc" },
-      { id: "database", label: "Supabase DB", x: 2.4, y: -1.2, z: -0.3, color: "#6366f1" },
-      { id: "ai", label: "OpenAI Engine", x: 2.4, y: 1.3, z: 0.4, color: "#c4b5fd" },
-      { id: "deploy", label: "Vercel Deploy", x: 4.2, y: 0, z: 0, color: "#4f46e5" },
-    ],
-    edges: [
-      { from: "client", to: "frontend" },
-      { from: "frontend", to: "api" },
-      { from: "api", to: "database" },
-      { from: "api", to: "ai" },
-      { from: "database", to: "deploy" },
-      { from: "ai", to: "deploy" },
-    ],
-  },
-
-  marqueeItems: [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Node.js",
-    "Supabase",
-    "OpenAI",
-    "REST APIs",
-    "JavaScript",
-    "Python",
-    "Tailwind CSS",
   ],
 
   site: {
@@ -1022,10 +650,3 @@ export function getProjectBySlug(slug: string): PortfolioProject | undefined {
   return portfolioData.projects.find((p) => p.caseStudySlug === slug);
 }
 
-export function getExperienceById(id: string): DetailedExperience | undefined {
-  return portfolioData.experience.find((e) => e.id === id);
-}
-
-export function getFeaturedProjects(): PortfolioProject[] {
-  return portfolioData.projects.filter((p) => p.featured);
-}
