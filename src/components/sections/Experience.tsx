@@ -1,165 +1,281 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Target,
-  Wrench,
-  Layers,
-  TrendingUp,
-  Box,
+  Building2,
+  Cpu,
+  Layout,
+  ChevronDown,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
-import { SectionHeader } from "@/components/shared/SectionHeader";
-import { ExperienceTimeline } from "@/components/visuals/ExperienceTimeline";
+import { TimelineGlow } from "@/components/effects/section-backgrounds";
 import { FlowDiagram } from "@/components/visuals/FlowDiagram";
+import { ArchitectureDiagram } from "@/components/visuals/ArchitectureDiagram";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import { Badge } from "@/components/ui/badge";
 
 const experience = portfolioData.experience;
 
-const ExperienceCube = dynamic(
-  () =>
-    import("@/components/effects/ExperienceCube").then((m) => m.ExperienceCube),
-  { ssr: false }
-);
+const companyMeta: Record<
+  string,
+  {
+    icon: LucideIcon;
+    narrative: string;
+    lessons: string[];
+    architecture: { name: string; description: string }[];
+  }
+> = {
+  pramana15: {
+    icon: Building2,
+    narrative:
+      "As co-founder, I own the full technical stack — from database schemas and REST APIs to AI integrations and production deployments across multiple live products.",
+    lessons: [
+      "Small teams ship faster when architecture decisions are made upfront.",
+      "AI products need extraction logic separated from generation logic.",
+      "Reusable API patterns across products reduce iteration cost.",
+    ],
+    architecture: [
+      { name: "React Frontends", description: "Dashboards and user-facing apps" },
+      { name: "Node.js APIs", description: "REST orchestration and automation" },
+      { name: "Supabase", description: "Auth, storage, and structured data" },
+      { name: "OpenAI Layer", description: "LLM integration for automation" },
+    ],
+  },
+  "tata-power": {
+    icon: Cpu,
+    narrative:
+      "Worked in the operational data domain — processing field records, identifying transformer faults, and mapping consumer impact through validation-heavy backend workflows.",
+    lessons: [
+      "Operational data requires validation before any downstream processing.",
+      "Inconsistent field formats need normalization pipelines.",
+      "Fault identification logic must account for edge cases in real records.",
+    ],
+    architecture: [
+      { name: "Data Ingestion", description: "Field record intake and parsing" },
+      { name: "Validation Engine", description: "Format checks and business rules" },
+      { name: "Fault Analysis", description: "Transformer fault identification" },
+      { name: "Consumer Mapping", description: "Impact analysis on end users" },
+    ],
+  },
+  oshvik: {
+    icon: Layout,
+    narrative:
+      "Focused on frontend engineering — building reusable component systems, responsive layouts, and performance-optimized interfaces for client production sites.",
+    lessons: [
+      "Component libraries reduce duplication across client projects.",
+      "Responsive architecture decisions affect long-term maintainability.",
+      "Performance optimization is a feature, not an afterthought.",
+    ],
+    architecture: [
+      { name: "Component System", description: "Reusable UI building blocks" },
+      { name: "Layout Engine", description: "Responsive grid and breakpoint logic" },
+      { name: "Asset Pipeline", description: "Optimized images and lazy loading" },
+      { name: "Cross-browser QA", description: "Compatibility validation workflows" },
+    ],
+  },
+};
 
 export function Experience() {
-  const [activeId, setActiveId] = useState(experience[0].id);
-  const active = experience.find((e) => e.id === activeId) ?? experience[0];
-  const activeIndex = experience.findIndex((e) => e.id === activeId);
+  const [expandedId, setExpandedId] = useState<string | null>(
+    experience[0].id
+  );
+  const activeIndex = experience.findIndex((e) => e.id === expandedId);
 
   return (
-    <section id="experience" className="px-6 py-28">
-      <div className="mx-auto max-w-6xl">
+    <section id="experience" className="relative px-6 py-28">
+      <TimelineGlow
+        activeIndex={activeIndex >= 0 ? activeIndex : 0}
+        className="pointer-events-none absolute inset-0"
+      />
+
+      <div className="relative mx-auto max-w-4xl">
         <SectionHeader
           label="Work"
-          title="Experience"
-          description="Detailed breakdown of roles, systems built, and engineering decisions — not bullet-point summaries."
+          title="Experience timeline"
+          description="Each company expands into a case study — responsibilities, systems built, architecture, and lessons learned."
         />
 
-        <div className="mb-12 flex justify-center">
-          <ExperienceCube
-            experiences={experience}
-            activeIndex={activeIndex}
-            className="h-[280px] w-full max-w-md"
-          />
-        </div>
-
-        <div className="grid gap-12 lg:grid-cols-[300px_1fr]">
-          <ExperienceTimeline
-            items={experience}
-            activeId={activeId}
-            onSelect={setActiveId}
+        <div className="relative mt-16">
+          <div
+            className="absolute bottom-0 left-[1.65rem] top-0 w-px bg-border"
+            aria-hidden
           />
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-10"
-            >
-              <div>
-                <p className="text-sm text-muted-foreground">{active.period}</p>
-                <h3 className="mt-1 text-2xl font-semibold tracking-tight">
-                  {active.role}
-                </h3>
-                <p className="mt-1 text-lg text-muted-foreground">
-                  {active.company}
-                </p>
-                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                  {active.summary}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {active.techStack.map((tech) => (
-                    <Badge key={tech} variant="outline" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+          <div className="space-y-4">
+            {experience.map((exp, index) => {
+              const isOpen = expandedId === exp.id;
+              const meta = companyMeta[exp.id];
 
-              <DetailBlock
-                icon={Target}
-                title="Challenges"
-                items={active.challenges}
-              />
-              <DetailBlock
-                icon={Wrench}
-                title="Responsibilities"
-                items={active.responsibilities}
-              />
+              return (
+                <div key={exp.id} className="relative pl-14">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExpandedId(isOpen ? null : exp.id)
+                    }
+                    className={`absolute left-0 top-5 flex h-[3.3rem] w-[3.3rem] items-center justify-center rounded-full border-2 text-sm font-semibold transition-all duration-500 ${
+                      isOpen
+                        ? "border-violet-400 bg-violet-500/20 text-foreground shadow-lg shadow-violet-500/20"
+                        : "border-border bg-card text-muted-foreground"
+                    }`}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </button>
 
-              <div>
-                <div className="mb-4 flex items-center gap-2">
-                  <Box className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-                  <h4 className="font-semibold">Systems Built</h4>
-                </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {active.systemsBuilt.map((system) => (
-                    <div
-                      key={system.name}
-                      className="rounded-xl border border-border p-4"
+                  <motion.article
+                    layout
+                    className={`overflow-hidden rounded-2xl border transition-colors duration-500 ${
+                      isOpen
+                        ? "border-violet-500/25 bg-card/70 shadow-xl shadow-violet-500/5"
+                        : "border-border bg-card/40 hover:border-foreground/15"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedId(isOpen ? null : exp.id)
+                      }
+                      className="flex w-full items-start justify-between gap-4 p-6 text-left sm:p-8"
                     >
-                      <p className="text-sm font-medium">{system.name}</p>
-                      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                        {system.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          {exp.period}
+                        </p>
+                        <h3 className="mt-1 text-xl font-semibold sm:text-2xl">
+                          {exp.role}
+                        </h3>
+                        <p className="text-muted-foreground">{exp.company}</p>
+                        {!isOpen && (
+                          <p className="mt-3 line-clamp-2 text-sm text-muted-foreground/80">
+                            {exp.summary}
+                          </p>
+                        )}
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        className="mt-2 shrink-0 rounded-full border border-border p-2"
+                      >
+                        <ChevronDown className="h-4 w-4" strokeWidth={1.5} />
+                      </motion.div>
+                    </button>
 
-              <DetailBlock
-                icon={TrendingUp}
-                title="Impact"
-                items={active.impact}
-              />
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.4 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="border-t border-border px-6 pb-8 sm:px-8">
+                            <p className="pt-6 text-sm leading-relaxed text-muted-foreground">
+                              {meta.narrative}
+                            </p>
 
-              <div>
-                <div className="mb-6 flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-                  <h4 className="font-semibold">Process Flow</h4>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                              {exp.techStack.map((t) => (
+                                <Badge key={t} variant="outline" className="text-xs">
+                                  {t}
+                                </Badge>
+                              ))}
+                            </div>
+
+                            <div className="mt-10 grid gap-8 lg:grid-cols-2">
+                              <StoryBlock
+                                title="Responsibilities"
+                                items={exp.responsibilities}
+                              />
+                              <StoryBlock
+                                title="Challenges"
+                                items={exp.challenges}
+                              />
+                              <StoryBlock title="Impact" items={exp.impact} />
+                              <div>
+                                <p className="mb-4 font-semibold">Systems Built</p>
+                                <div className="space-y-3">
+                                  {exp.systemsBuilt.map((sys) => (
+                                    <div
+                                      key={sys.name}
+                                      className="rounded-xl border border-border p-4"
+                                    >
+                                      <p className="font-medium">{sys.name}</p>
+                                      <p className="mt-1.5 text-sm text-muted-foreground">
+                                        {sys.description}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mt-10 grid gap-8 lg:grid-cols-2">
+                              <div>
+                                <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                                  Architecture
+                                </p>
+                                <ArchitectureDiagram layers={meta.architecture} />
+                              </div>
+                              <div>
+                                <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                                  Process flow
+                                </p>
+                                <FlowDiagram
+                                  steps={exp.processFlow}
+                                  direction="vertical"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="mt-8 rounded-xl border border-border bg-muted/20 p-5">
+                              <div className="mb-3 flex items-center gap-2">
+                                <BookOpen
+                                  className="h-4 w-4 text-muted-foreground"
+                                  strokeWidth={1.5}
+                                />
+                                <p className="font-semibold">Lessons Learned</p>
+                              </div>
+                              <ul className="space-y-2">
+                                {meta.lessons.map((l) => (
+                                  <li
+                                    key={l}
+                                    className="flex gap-2 text-sm text-muted-foreground"
+                                  >
+                                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-violet-400" />
+                                    {l}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.article>
                 </div>
-                <FlowDiagram
-                  steps={active.processFlow}
-                  direction={active.id === "oshvik" ? "horizontal" : "vertical"}
-                />
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function DetailBlock({
-  icon: Icon,
-  title,
-  items,
-}: {
-  icon: LucideIcon;
-  title: string;
-  items: string[];
-}) {
+function StoryBlock({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <div className="mb-4 flex items-center gap-2">
-        <Icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-        <h4 className="font-semibold">{title}</h4>
-      </div>
+      <p className="mb-4 font-semibold">{title}</p>
       <ul className="space-y-2.5">
         {items.map((item) => (
           <li
             key={item}
             className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
           >
-            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground/60" />
+            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-violet-400" />
             {item}
           </li>
         ))}

@@ -895,7 +895,8 @@ export const portfolioData: PortfolioData = {
     { label: "Projects", href: "#projects" },
     { label: "Pramana15", href: "#founder" },
     { label: "Architecture", href: "#architecture" },
-    { label: "Process", href: "#engineering" },
+    { label: "Process", href: "#process" },
+    { label: "Skills", href: "#skills" },
     { label: "Contact", href: "#contact" },
   ],
 
