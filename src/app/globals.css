@@ -24,42 +24,81 @@ body {
 }
 
 ::selection {
-  background: rgba(129, 140, 248, 0.25);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.glass-panel {
+/* Refined glass — readable, not flashy */
+.glass-panel,
+.pro-card {
   border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(6, 6, 14, 0.82);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 0 48px rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 10, 0.88);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.projects-card-swap .card-swap-container {
-  position: relative !important;
-  bottom: auto !important;
-  right: auto !important;
-  transform: none !important;
-  margin: 0 auto;
+.pro-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
-.projects-card-swap .project-swap-card {
-  border: none !important;
-  background: transparent !important;
+/* Experience cards */
+.exp-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 10, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-@media (max-width: 768px) {
-  .projects-card-swap .card-swap-container {
-    transform: scale(0.88) !important;
-  }
+.exp-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
-@media (max-width: 480px) {
-  .projects-card-swap .card-swap-container {
-    transform: scale(0.75) !important;
-  }
+.exp-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent, #94a3b8);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.exp-card:hover .exp-card-accent {
+  opacity: 1;
+}
+
+/* Horizontal project scroll */
+.projects-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.projects-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.projects-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.projects-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.projects-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }

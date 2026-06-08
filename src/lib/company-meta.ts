@@ -10,19 +10,19 @@ export interface CompanyMeta {
 export const companyMeta: Record<string, CompanyMeta> = {
   pramana15: {
     icon: Building2,
-    color: "#7df9ff",
+    color: "#a1a1aa",
     initials: "P15",
     tagline: "Product Studio",
   },
   "tata-power": {
     icon: Zap,
-    color: "#60a5fa",
+    color: "#93c5fd",
     initials: "TP",
     tagline: "Energy & Operations",
   },
   oshvik: {
     icon: Code2,
-    color: "#c084fc",
+    color: "#c4b5fd",
     initials: "OS",
     tagline: "Web Development",
   },

@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { Menu, X, Moon, Sun, Download } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "next-themes";
 import { portfolioData } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,12 +15,9 @@ export function SiteNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState("#hero");
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -47,47 +42,45 @@ export function SiteNavbar() {
 
   return (
     <motion.header
-      initial={{ y: -24, opacity: 0 }}
+      initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-white/10 bg-black/75 shadow-lg shadow-black/40 backdrop-blur-xl"
-          : "border-transparent bg-black/20 backdrop-blur-sm"
+          ? "border-b border-white/8 bg-black/85 shadow-sm backdrop-blur-md"
+          : "bg-transparent"
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <motion.a
-          href="#hero"
-          className="flex items-center gap-3"
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-        >
-          <div className="relative h-9 w-9 overflow-hidden rounded-full border border-white/25 shadow-md shadow-violet-500/20">
-            <Image src="/profile.png" alt={personal.name} fill className="object-cover" />
+      <nav className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between px-6">
+        <a href="#hero" className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md border border-white/15 bg-white/[0.04] text-xs font-semibold tracking-wide text-white">
+            YM
           </div>
-          <span className="hidden text-sm font-semibold sm:inline">{personal.name}</span>
-        </motion.a>
+          <div className="hidden sm:block">
+            <span className="block text-sm font-medium text-white">{personal.name}</span>
+            <span className="block text-[11px] text-white/45">Software Developer</span>
+          </div>
+        </a>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={cn(
-                "relative rounded-lg px-3 py-2 text-sm transition-colors duration-300",
+                "relative px-3 py-2 text-[13px] font-medium transition-colors duration-200",
                 active === link.href
                   ? "text-white"
-                  : "text-white/60 hover:text-white"
+                  : "text-white/50 hover:text-white/80"
               )}
             >
               {link.label}
               {active === link.href && (
                 <motion.span
                   layoutId="nav-indicator"
-                  className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-violet-400"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  className="absolute inset-x-3 -bottom-px h-px bg-white/70"
+                  transition={{ type: "spring", stiffness: 400, damping: 35 }}
                 />
               )}
             </a>
@@ -95,31 +88,21 @@ export function SiteNavbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="hidden border-white/20 bg-black/30 backdrop-blur-sm sm:flex" asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="hidden h-8 border-white/12 bg-transparent text-xs text-white/80 hover:bg-white/5 sm:flex"
+            asChild
+          >
             <a href={resume.downloadUrl} download>
               <Download className="mr-1.5 h-3.5 w-3.5" strokeWidth={1.5} />
               Resume
             </a>
           </Button>
-          {mounted && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" strokeWidth={1.5} />
-              ) : (
-                <Moon className="h-4 w-4" strokeWidth={1.5} />
-              )}
-            </Button>
-          )}
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 md:hidden"
+            className="h-8 w-8 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
@@ -134,20 +117,32 @@ export function SiteNavbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-white/10 bg-black/90 md:hidden"
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden border-t border-white/8 bg-black/95 lg:hidden"
           >
-            <div className="px-4 py-3">
+            <div className="space-y-1 px-4 py-3">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/5"
+                  className={cn(
+                    "block rounded-md px-3 py-2.5 text-sm transition-colors",
+                    active === link.href
+                      ? "bg-white/5 text-white"
+                      : "text-white/65 hover:bg-white/5 hover:text-white"
+                  )}
                 >
                   {link.label}
                 </a>
               ))}
+              <a
+                href={resume.downloadUrl}
+                download
+                className="mt-2 block rounded-md border border-white/10 px-3 py-2.5 text-center text-sm text-white/80"
+              >
+                Download Resume
+              </a>
             </div>
           </motion.div>
         )}

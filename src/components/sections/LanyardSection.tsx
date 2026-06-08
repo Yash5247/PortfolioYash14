@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 
 const Lanyard = dynamic(() => import("@/components/components/LanyardClient"), {
   ssr: false,
@@ -9,13 +10,12 @@ const Lanyard = dynamic(() => import("@/components/components/LanyardClient"), {
 export function LanyardSection() {
   return (
     <section id="badge" className="relative">
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-black to-transparent py-16 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-white">
-          Behind The Developer
-        </h2>
-        <p className="mt-2 text-sm text-white/50">
-          Drag the badge — physics-powered developer ID
-        </p>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-black via-black/80 to-transparent px-6 pb-8 pt-12">
+        <SectionHeading
+          label="Developer ID"
+          title="Behind The Developer"
+          description="Drag the badge to interact."
+        />
       </div>
       <div className="relative h-screen w-full">
         <Lanyard

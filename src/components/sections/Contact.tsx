@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Send } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 import { SocialLinks } from "@/components/shared/SocialLinks";
-import { SectionHeader } from "@/components/shared/SectionHeader";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,10 +21,11 @@ export function Contact() {
   return (
     <section id="contact" className="relative px-6 py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionHeader
+        <SectionHeading
           label="Contact"
-          title="Let's build something"
+          title="Get in touch"
           description="Open to collaborations, internships, and engineering conversations."
+          align="left"
         />
 
         <div className="grid gap-8 lg:grid-cols-2">
@@ -43,7 +44,7 @@ export function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-panel overflow-hidden rounded-2xl p-1"
+            className="pro-card overflow-hidden rounded-xl p-1"
           >
             <div className="rounded-xl p-6 sm:p-8">
               {submitted ? (
