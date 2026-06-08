@@ -4,7 +4,6 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
-import { GradientMesh } from "@/components/effects/section-backgrounds";
 import { SocialLinks } from "@/components/shared/SocialLinks";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { Button } from "@/components/ui/button";
@@ -20,10 +19,8 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden px-6 py-28">
-      <GradientMesh className="absolute inset-0" />
-
-      <div className="relative mx-auto max-w-6xl">
+    <section id="contact" className="relative px-6 py-28">
+      <div className="mx-auto max-w-6xl">
         <SectionHeader
           label="Contact"
           title="Let's build something"
