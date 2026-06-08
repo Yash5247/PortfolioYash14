@@ -44,7 +44,7 @@ export function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="pro-card overflow-hidden rounded-xl p-1"
+            className="readable-card overflow-hidden rounded-xl p-1"
           >
             <div className="rounded-xl p-6 sm:p-8">
               {submitted ? (

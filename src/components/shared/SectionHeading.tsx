@@ -19,14 +19,14 @@ export function SectionHeading({
 
   return (
     <ScrollReveal className={`mb-14 max-w-2xl ${alignClass}`}>
-      <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-white/45">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/65">
         {label}
       </p>
-      <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+      <h2 className="text-3xl font-bold tracking-tight text-white text-shadow-sm sm:text-4xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base leading-relaxed text-white/60">{description}</p>
+        <p className="mt-4 text-base leading-relaxed text-white/80">{description}</p>
       )}
     </ScrollReveal>
   );

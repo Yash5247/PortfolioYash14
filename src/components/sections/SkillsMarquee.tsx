@@ -41,7 +41,7 @@ export function SkillsMarquee() {
         />
 
         <ScrollReveal>
-          <div className="pro-card relative overflow-hidden rounded-xl py-5">
+          <div className="readable-card relative overflow-hidden rounded-xl py-5">
             <LogoLoop
               logos={logoItems}
               speed={45}
@@ -59,15 +59,15 @@ export function SkillsMarquee() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(portfolioData.tools).map(([category, items], index) => (
             <ScrollReveal key={category} delay={index * 0.06}>
-              <div className="pro-card rounded-xl p-6">
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/50">
+              <div className="readable-card rounded-xl p-6">
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/75">
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-white/70"
+                      className="rounded-md border border-white/15 bg-white/10 px-2.5 py-1 text-xs font-medium text-white/90"
                     >
                       {item}
                     </span>
