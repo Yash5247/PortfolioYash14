@@ -15,8 +15,6 @@ interface CommandPaletteProps {
 
 const commands = [
   ...navLinks.map((l) => ({ label: `Go to ${l.label}`, href: l.href, type: "nav" })),
-  { label: "View Projects", href: "#projects", type: "nav" },
-  { label: "Open Terminal", href: "#terminal", type: "nav" },
   { label: "Contact Me", href: "#contact", type: "nav" },
   { label: "Toggle Dark Mode", href: "#theme", type: "action" },
 ];

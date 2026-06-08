@@ -2,95 +2,152 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Target,
+  Wrench,
+  Layers,
+  TrendingUp,
+  Box,
+  type LucideIcon,
+} from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { ExperienceTimeline } from "@/components/visuals/ExperienceTimeline";
+import { FlowDiagram } from "@/components/visuals/FlowDiagram";
+import { Badge } from "@/components/ui/badge";
 
 const experience = portfolioData.experience;
-import { SectionHeader } from "@/components/shared/SectionHeader";
-import { Card, CardContent } from "@/components/ui/card";
-import { Briefcase } from "lucide-react";
 
 export function Experience() {
-  const [active, setActive] = useState(0);
+  const [activeId, setActiveId] = useState(experience[0].id);
+  const active = experience.find((e) => e.id === activeId) ?? experience[0];
 
   return (
-    <section id="experience" className="px-6 py-24">
+    <section id="experience" className="px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
-          label="Career"
+          label="Work"
           title="Experience"
-          description="My professional journey building software and leading technical initiatives."
+          description="Detailed breakdown of roles, systems built, and engineering decisions — not bullet-point summaries."
         />
 
-        <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
-          <div className="relative space-y-2">
-            <div className="absolute left-4 top-0 hidden h-full w-px bg-border lg:block" />
-            {experience.map((exp, i) => (
-              <button
-                key={exp.company}
-                onClick={() => setActive(i)}
-                className={`relative flex w-full items-start gap-4 rounded-xl p-4 text-left transition-all duration-300 ${
-                  active === i
-                    ? "bg-muted"
-                    : "hover:bg-muted/50"
-                }`}
-                data-cursor="pointer"
-              >
-                <div
-                  className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border ${
-                    active === i
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-background"
-                  }`}
-                >
-                  <Briefcase className="h-3.5 w-3.5" />
-                </div>
-                <div>
-                  <p className="font-semibold">{exp.company}</p>
-                  <p className="text-sm text-muted-foreground">{exp.period}</p>
-                </div>
-              </button>
-            ))}
-          </div>
+        <div className="grid gap-12 lg:grid-cols-[300px_1fr]">
+          <ExperienceTimeline
+            items={experience}
+            activeId={activeId}
+            onSelect={setActiveId}
+          />
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={active}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
+              key={active.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.3 }}
+              className="space-y-10"
             >
-              <Card>
-                <CardContent className="p-8">
-                  <p className="text-sm text-muted-foreground">
-                    {experience[active].period}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-semibold">
-                    {experience[active].role}
-                  </h3>
-                  <p className="mt-1 text-lg text-muted-foreground">
-                    {experience[active].company}
-                  </p>
-                  <ul className="mt-8 space-y-4">
-                    {experience[active].achievements.map((item, i) => (
-                      <motion.li
-                        key={item}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex gap-3 text-muted-foreground"
-                      >
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" />
-                        {item}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <div>
+                <p className="text-sm text-muted-foreground">{active.period}</p>
+                <h3 className="mt-1 text-2xl font-semibold tracking-tight">
+                  {active.role}
+                </h3>
+                <p className="mt-1 text-lg text-muted-foreground">
+                  {active.company}
+                </p>
+                <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                  {active.summary}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {active.techStack.map((tech) => (
+                    <Badge key={tech} variant="outline" className="text-xs">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <DetailBlock
+                icon={Target}
+                title="Challenges"
+                items={active.challenges}
+              />
+              <DetailBlock
+                icon={Wrench}
+                title="Responsibilities"
+                items={active.responsibilities}
+              />
+
+              <div>
+                <div className="mb-4 flex items-center gap-2">
+                  <Box className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                  <h4 className="font-semibold">Systems Built</h4>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {active.systemsBuilt.map((system) => (
+                    <div
+                      key={system.name}
+                      className="rounded-xl border border-border p-4"
+                    >
+                      <p className="text-sm font-medium">{system.name}</p>
+                      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                        {system.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <DetailBlock
+                icon={TrendingUp}
+                title="Impact"
+                items={active.impact}
+              />
+
+              <div>
+                <div className="mb-6 flex items-center gap-2">
+                  <Layers className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                  <h4 className="font-semibold">Process Flow</h4>
+                </div>
+                <FlowDiagram
+                  steps={active.processFlow}
+                  direction={active.id === "oshvik" ? "horizontal" : "vertical"}
+                />
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
     </section>
+  );
+}
+
+function DetailBlock({
+  icon: Icon,
+  title,
+  items,
+}: {
+  icon: LucideIcon;
+  title: string;
+  items: string[];
+}) {
+  return (
+    <div>
+      <div className="mb-4 flex items-center gap-2">
+        <Icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+        <h4 className="font-semibold">{title}</h4>
+      </div>
+      <ul className="space-y-2.5">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
+          >
+            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground/60" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import {
   portfolioData,
   getStructuredDataSameAs,
+  isValidUrl,
 } from "@/data/portfolio";
 import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
@@ -20,13 +21,12 @@ const geistMono = Geist_Mono({
 const { personal, site } = portfolioData;
 
 export const metadata: Metadata = {
-  title: `${personal.name} | Software Developer & Full Stack Engineer`,
-  description: `Portfolio of ${personal.name} — ${personal.role}. ${site.description}`,
+  title: `${personal.name} | Software Developer & AI Automation Builder`,
+  description: `${personal.name} — ${personal.role}. ${site.description}`,
   keywords: [
     personal.name,
     "Software Developer",
     "Full Stack Developer",
-    "DevOps",
     "AI Automation",
     "Next.js",
     "React",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: site.description,
     type: "website",
     locale: "en_US",
-    url: site.url,
+    ...(isValidUrl(site.url) ? { url: site.url } : {}),
   },
   twitter: {
     card: "summary_large_image",
@@ -63,14 +63,13 @@ const jsonLd = {
     "@type": "PostalAddress",
     addressLocality: personal.location,
   },
-  url: site.url,
+  ...(isValidUrl(site.url) ? { url: site.url } : {}),
   sameAs: getStructuredDataSameAs(),
   knowsAbout: [
     "Software Engineering",
     "Full Stack Development",
-    "DevOps",
     "AI Automation",
-    "UI/UX Design",
+    "System Design",
   ],
 };
 

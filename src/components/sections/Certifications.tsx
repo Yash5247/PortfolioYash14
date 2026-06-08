@@ -3,44 +3,41 @@
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 
 const certifications = portfolioData.certifications;
-import { SectionHeader } from "@/components/shared/SectionHeader";
-import { Card, CardContent } from "@/components/ui/card";
 
 export function Certifications() {
   return (
-    <section id="certifications" className="px-6 py-24">
+    <section id="certifications" className="px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           label="Credentials"
           title="Certifications"
-          description="Industry-recognized certifications and academic achievements."
+          description="Verified academic and industry credentials."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {certifications.map((cert, i) => (
             <motion.div
               key={cert.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
+              className="rounded-xl border border-border p-6 transition-colors hover:border-foreground/15"
             >
-              <Card className="group h-full transition-all duration-300 hover:border-foreground/20 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-muted transition-colors group-hover:bg-foreground group-hover:text-background">
-                    <Award className="h-5 w-5" />
-                  </div>
-                  <h3 className="font-semibold">{cert.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {cert.issuer}
-                  </p>
-                  <p className="mt-3 font-mono text-xs text-muted-foreground">
-                    {cert.year}
-                  </p>
-                </CardContent>
-              </Card>
+              <Award
+                className="h-5 w-5 text-muted-foreground"
+                strokeWidth={1.5}
+              />
+              <h3 className="mt-4 font-semibold">{cert.title}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {cert.issuer}
+              </p>
+              <p className="mt-3 font-mono text-xs text-muted-foreground">
+                {cert.year}
+              </p>
             </motion.div>
           ))}
         </div>
